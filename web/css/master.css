@@ -1,0 +1,39 @@
+body
+{
+    color: #111;
+    background-color: #EEE;
+}
+
+#main_title
+{
+    display: inline-block;
+}
+
+#fb_login
+{
+    float: right;
+}
+
+#fb_logged_data h2
+{
+    font-size: small;
+}
+
+#menu_container
+{
+    display: inline-block;
+
+    width: 20%;
+
+    vertical-align: top;
+}
+
+#page_content
+{
+    display: inline-block;
+
+    width: 78%;
+
+    background-color: #FFF;
+    border: 2px solid #BBB;
+}
