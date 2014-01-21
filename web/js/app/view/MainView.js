@@ -83,8 +83,14 @@ define(["require", "exports"], function(require, exports) {
                 });
             });
         };
+
+        MainView.postStories = function (fb) {
+            $(".post_fb_history").on("click", function (ev) {
+                fb.postLike();
+            });
+        };
         return MainView;
     })();
     exports.MainView = MainView;
 });
-//# sourceMappingURL=MainView.js.map
+//# sourceMappingURL=mainView.js.map

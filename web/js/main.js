@@ -24,6 +24,11 @@ define(["require", "exports", "app/controller/MainController", "app/library/Face
                     fb.printPictures();
 
                     break;
+
+                case ("fb_stories"):
+                    mainController.MainController.postStories(fb);
+
+                    break;
             }
         });
     });

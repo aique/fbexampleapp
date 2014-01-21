@@ -1,7 +1,7 @@
 /// <reference path="../../def/jquery.d.ts" />
 /// <reference path="../../def/requirejs.d.ts" />
 /// <reference path="../../def/facebook.d.ts" />
-define(["require", "exports", "app/cfg/Config", "app/view/MainView", "app/library/Cookie", "app/library/FacebookPrinter"], function(require, exports, __cfg__, __mainView__, __cookieLib__, __fbPrinterLib__) {
+define(["require", "exports", "app/cfg/Config", "app/view/mainView", "app/library/Cookie", "app/library/FacebookPrinter"], function(require, exports, __cfg__, __mainView__, __cookieLib__, __fbPrinterLib__) {
     var cfg = __cfg__;
     var mainView = __mainView__;
 
@@ -59,7 +59,7 @@ define(["require", "exports", "app/cfg/Config", "app/view/MainView", "app/librar
                     classRef.accessToken = authResponse.accessToken;
                     cookieLib.Cookie.setCookie("fb_access_token", classRef.accessToken, 1);
                 }
-            }, { scope: 'read_stream,user_photos' });
+            }, { scope: 'read_stream,user_photos,publish_actions' });
         };
 
         Facebook.prototype.printNews = function () {
@@ -118,6 +118,26 @@ define(["require", "exports", "app/cfg/Config", "app/view/MainView", "app/librar
                                 }
                             }
                         });
+                    }
+                }
+            });
+        };
+
+        Facebook.prototype.postLike = function () {
+            var accessToken = this.accessToken;
+
+            FB.api('https://graph.facebook.com/me/og.likes', 'post', {
+                object: 'http://techcrunch.com/2013/02/06/facebook-launches-developers-live-video-channel-to-keep-its-developer-ecosystem-up-to-date/',
+                privacy: { 'value': 'SELF' },
+                access_token: accessToken
+            }, function (response) {
+                if (!response) {
+                    alert('Error occurred.');
+                } else {
+                    if (response.error) {
+                        document.getElementById('result').innerHTML = 'Error: ' + response.error.message;
+                    } else {
+                        document.getElementById('result').innerHTML = '<a href=\"https://www.facebook.com/me/activity/' + response.id + '\">' + 'Historia creada con ID ' + response.id + '</a>';
                     }
                 }
             });

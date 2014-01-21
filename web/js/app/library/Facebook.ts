@@ -3,7 +3,7 @@
 /// <reference path="../../def/facebook.d.ts" />
 
 import cfg = require("app/cfg/Config");
-import mainView = require("app/view/MainView");
+import mainView = require("app/view/mainView");
 
 import requestLib = require("app/library/Request");
 import cookieLib = require("app/library/Cookie");
@@ -75,7 +75,7 @@ export class Facebook
                 classRef.accessToken =  authResponse.accessToken;
                 cookieLib.Cookie.setCookie("fb_access_token", classRef.accessToken, 1);
             }
-        }, {scope: 'read_stream,user_photos'});
+        }, {scope: 'read_stream,user_photos,publish_actions'});
     }
 
     public printNews()
@@ -154,6 +154,40 @@ export class Facebook
                 }
             }
         });
+    }
+
+    public postLike()
+    {
+        var accessToken = this.accessToken;
+
+        FB.api
+        (
+            'https://graph.facebook.com/me/og.likes',
+            'post',
+            {
+                object: 'http://techcrunch.com/2013/02/06/facebook-launches-developers-live-video-channel-to-keep-its-developer-ecosystem-up-to-date/',
+                privacy: {'value': 'SELF'},
+                access_token: accessToken
+            },
+            function(response?)
+            {
+                if(!response)
+                {
+                    alert('Error occurred.');
+                }
+                else
+                {
+                    if(response.error)
+                    {
+                        document.getElementById('result').innerHTML = 'Error: ' + response.error.message;
+                    }
+                    else
+                    {
+                        document.getElementById('result').innerHTML = '<a href=\"https://www.facebook.com/me/activity/' + response.id + '\">' + 'Historia creada con ID ' + response.id + '</a>';
+                    }
+                }
+            }
+        );
     }
 
     private checkAccessToken()

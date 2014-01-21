@@ -29,6 +29,12 @@ $(function()
                 fb.printPictures();
 
             break;
+
+            case("fb_stories"):
+
+                mainController.MainController.postStories(fb);
+
+            break;
         }
     });
 });

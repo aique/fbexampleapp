@@ -100,4 +100,12 @@ export class MainView
             });
         });
     }
+
+    public static postStories(fb:fbLib.Facebook)
+    {
+        $(".post_fb_history").on("click", function(ev)
+        {
+            fb.postLike();
+        });
+    }
 }
